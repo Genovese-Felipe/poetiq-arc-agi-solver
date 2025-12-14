@@ -385,15 +385,19 @@ if __name__ == "__main__":
     
     if len(sys.argv) > 1:
         # Display specific prompt(s)
+        invalid_prompts = []
         for prompt_name in sys.argv[1:]:
             if prompt_name in prompts:
                 print(f"=== {prompt_name} ===")
                 print(prompts[prompt_name])
                 print()
             else:
-                print(f"Error: Prompt '{prompt_name}' not found.", file=sys.stderr)
-                print(f"Available prompts: {', '.join(prompts.keys())}", file=sys.stderr)
-                sys.exit(1)
+                invalid_prompts.append(prompt_name)
+        
+        if invalid_prompts:
+            print(f"Error: The following prompt(s) were not found: {', '.join(invalid_prompts)}", file=sys.stderr)
+            print(f"Available prompts: {', '.join(prompts.keys())}", file=sys.stderr)
+            sys.exit(1)
     else:
         # List all available prompts
         print("Available prompts:")
