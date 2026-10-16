@@ -371,3 +371,37 @@ Following are some of the best, though not completely correct, solutions so far.
 
 $$feedback$$
 '''
+
+
+if __name__ == "__main__":
+    import sys
+    
+    prompts = {
+        'SOLVER_PROMPT_1': SOLVER_PROMPT_1,
+        'SOLVER_PROMPT_2': SOLVER_PROMPT_2,
+        'SOLVER_PROMPT_3': SOLVER_PROMPT_3,
+        'FEEDBACK_PROMPT': FEEDBACK_PROMPT,
+    }
+    
+    if len(sys.argv) > 1:
+        # Display specific prompt(s)
+        invalid_prompts = []
+        for prompt_name in sys.argv[1:]:
+            if prompt_name in prompts:
+                print(f"=== {prompt_name} ===")
+                print(prompts[prompt_name])
+                print()
+            else:
+                invalid_prompts.append(prompt_name)
+        
+        if invalid_prompts:
+            print(f"Error: The following prompt(s) were not found: {', '.join(invalid_prompts)}", file=sys.stderr)
+            print(f"Available prompts: {', '.join(prompts.keys())}", file=sys.stderr)
+            sys.exit(1)
+    else:
+        # List all available prompts
+        print("Available prompts:")
+        for name in prompts.keys():
+            print(f"  - {name}")
+        print("\nUsage: python prompts.py [PROMPT_NAME ...]")
+        print("Example: python prompts.py SOLVER_PROMPT_1")
